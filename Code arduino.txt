@@ -1,0 +1,96 @@
+int IN1 = 2 ; 
+int IN2 = 4 ; 
+int IN3 = 7 ; 
+int IN4 = 8 ; 
+int ENA = 3; 
+int ENB = 5; 
+int Msensor = A2; 
+int Lsensor = A1; 
+int Rsensor = A0; 
+int RIGHT , LEFT, mid; 
+int x = 100; 
+int y = 100; 
+
+ 
+int x1=80; 
+int y1=80; 
+ 
+ 
+void setup() { 
+Serial.begin(9600); 
+pinMode(IN1 , OUTPUT); 
+pinMode(IN2 , OUTPUT); 
+pinMode(IN3 , OUTPUT); 
+pinMode(IN4 , OUTPUT); 
+pinMode(ENA , OUTPUT); 
+pinMode(ENB , OUTPUT); 
+pinMode(Rsensor , INPUT); 
+pinMode(Lsensor , INPUT); 
+pinMode(Msensor , INPUT); 
+} 
+ 
+void loop() { 
+  RIGHT = digitalRead(Rsensor); 
+  LEFT = digitalRead(Lsensor); 
+  mid = digitalRead(Msensor); 
+  Serial.print("RIGHT sensor: "); 
+  Serial.println(RIGHT); 
+  Serial.print("LEFT sensor: "); 
+  Serial.println(LEFT); 
+  Serial.print("Mid sensor: "); 
+  Serial.println(mid); 
+ 
+  if (RIGHT == 0 && LEFT == 0 && mid == 1) { 
+    digitalWrite(IN1 , HIGH); 
+    digitalWrite(IN2 , LOW); 
+    digitalWrite(IN3 , HIGH); 
+    digitalWrite(IN4 , LOW); 
+    analogWrite(ENA , x); 
+    analogWrite(ENB , y); 
+    Serial.println("FORWARD"); 
+  } 
+ 
+  else if (RIGHT == 0 && LEFT == 1) { 
+    digitalWrite(IN1 , HIGH); 
+    digitalWrite(IN2 , LOW); 
+    digitalWrite(IN3 , LOW); 
+    digitalWrite(IN4 , HIGH); 
+    analogWrite(ENA , x1); // Motor A forward 
+    analogWrite(ENB , 0); // Motor B stopped 
+    Serial.println("LEFT"); 
+  } 
+ 
+ 
+ 
+   else if (RIGHT == 1 && LEFT == 0) { 
+    digitalWrite(IN1 , LOW); 
+    digitalWrite(IN2 , HIGH); 
+    digitalWrite(IN3 , HIGH); 
+    digitalWrite(IN4 , LOW); 
+    analogWrite(ENA , 0); // Motor A stopped 
+    analogWrite(ENB , y1); // Motor B forward 
+    Serial.println("RIGHT"); 
+  } 
+ 
+  else if (RIGHT == 1 && LEFT == 1 && mid == 1) { 
+    digitalWrite(IN1 , HIGH); 
+    digitalWrite(IN2 , LOW); 
+    digitalWrite(IN3 , HIGH); 
+    digitalWrite(IN4 , LOW); 
+    analogWrite(ENA , x); 
+    analogWrite(ENB , y); 
+    Serial.println("FORWARD"); 
+  } 
+ 
+//  else if (RIGHT == 0 && LEFT == 0 && mid==0) { 
+//   
+//    digitalWrite(IN1 , LOW); 
+//    digitalWrite(IN2 , LOW); 
+//    digitalWrite(IN3 , LOW); 
+//    digitalWrite(IN4 , LOW); 
+//    analogWrite(ENA , 0); // Motor A stopped 
+//    analogWrite(ENB , 0); // Motor B stopped 
+//    Serial.println("STOP"); 
+//   
+//  } 
+} 
